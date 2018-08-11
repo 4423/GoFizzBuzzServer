@@ -21,10 +21,12 @@ func fizzbuzz(n int) string {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("", "")
 	r.ParseForm()
 	s := strings.Split(r.URL.Path, "/")
 	n, err := strconv.Atoi(s[len(s)-1])
 	if err != nil {
+		w.WriteHeader(400)
 		fmt.Fprintf(w, "invalid number")
 	} else {
 		fmt.Fprintf(w, fizzbuzz(n))
